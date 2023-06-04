@@ -8,8 +8,26 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true
-	}
+		"strict": true,
+		"outDir": ".svelte-kit/output"
+	},
+	"include": [
+		"./.svelte-kit/ambient.d.ts",
+		"./.svelte-kit/types/**/$types.d.ts",
+		"./src/**/*.js",
+		"./src/**/*.ts",
+		"./src/**/*.svelte",
+		"./tests/**/*.js",
+		"./tests/**/*.ts",
+		"./tests/**/*.svelte",
+		"./types/**/*.ts",
+		"*.cjs",
+		".*.cjs",
+		"*.js",
+		"*.ts",
+		"**/*.tsx",
+		"./.vscode/*.json"
+	]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
 	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes

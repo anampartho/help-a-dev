@@ -1,19 +1,17 @@
-/** @type {import('tailwindcss').Config}*/
-import path from 'path';
-import SkeletonUI from '@skeletonlabs/skeleton/tailwind/skeleton.cjs';
+/** @type {import('tailwindcss').Config} */
 
 const config = {
 	darkMode: 'class',
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
-		path.join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
+		require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
 	],
 
 	theme: {
 		extend: {}
 	},
 
-	plugins: [...SkeletonUI()]
+	plugins: [...require('@skeletonlabs/skeleton/tailwind/skeleton.cjs')()]
 };
 
 module.exports = config;
