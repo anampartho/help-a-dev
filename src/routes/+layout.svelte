@@ -3,23 +3,20 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	import '../app.postcss';
 
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { LightSwitch, AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import { Footer, Brand } from '$lib/components';
 </script>
 
 <AppShell>
 	<svelte:fragment slot="header">
 		<AppBar>
-			<strong><Brand /></strong>
+			<svelte:fragment slot="lead"><Brand /></svelte:fragment>
+			<svelte:fragment slot="trail"><LightSwitch /></svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 
-	<!-- (sidebarLeft) -->
-	<!-- (sidebarRight) -->
-	<!-- (pageHeader) -->
 	<!-- Router Slot -->
 	<slot />
 	<!-- ---- / ---- -->
-	<!-- (pageFooter) -->
 	<svelte:fragment slot="footer"><Footer /></svelte:fragment>
 </AppShell>
