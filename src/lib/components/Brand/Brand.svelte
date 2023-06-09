@@ -1,1 +1,1 @@
-<a href="/">Help A Dev</a>
+<strong><a href="/">Help A Dev</a></strong>
