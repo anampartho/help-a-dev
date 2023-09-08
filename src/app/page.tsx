@@ -9,8 +9,8 @@ export default function Home() {
         This is a collection of small tools that I use more often than I
         realize.
       </p>
-      <Link href="/app">
-        <Button>Explore More</Button>
+      <Link href="/tools">
+        <Button>Explore the Tools</Button>
       </Link>
     </main>
   );
