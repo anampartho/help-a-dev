@@ -9,6 +9,8 @@
   - [ ] JWT Generator
 - [ ] Password
   - [ ] Password Generator
+    - [x] Api endpoint to generat passwords
+    - [ ] Page for generating passwords
   - [ ] Salt Generator
 - [ ] Color converter
   - [ ] Parse color and convert into other color systems
