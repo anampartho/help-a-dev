@@ -3,8 +3,21 @@
     - [x] UTF-8 Encode and Decode using encodeURI() and decodeURI()
     - [x] Full URL encode and decode using encodeURIComponent() and decodeURIComponent()
   - [ ] URL parser
+- [ ] JSON
 - [ ] JWT
   - [ ] JWT Verifier
   - [ ] JWT Generator
 - [ ] Password
   - [ ] Password Generator
+  - [ ] Salt Generator
+- [ ] Color converter
+  - [ ] Parse color and convert into other color systems
+- [ ] Number Converter
+- [ ] Image
+  - [ ] Image generator
+  - [ ] Image blur data generator
+- [ ] Search functionality
+  - [ ] On sidebar
+  - [ ] By keyboard shortcut
+- [ ] Footer with copyright
+- [ ] Responsive design
