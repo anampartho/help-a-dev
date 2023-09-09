@@ -97,6 +97,5 @@ export async function GET(request: Request) {
   return NextResponse.json({
     length: passwordLength,
     password: await shuffleString(generatedCharsArray.join("")),
-    options,
   });
 }
