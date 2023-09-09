@@ -1,3 +1,4 @@
+import PasswordGenerator from "./PasswordGenerator";
 import URLEncoder from "./URLEncoder";
 
 const Tool = ({ title, id = "url-encoder" }: { title: string; id: string }) => {
@@ -8,6 +9,7 @@ const Tool = ({ title, id = "url-encoder" }: { title: string; id: string }) => {
       </div>
 
       {id === "url-encoder" && <URLEncoder />}
+      {id === "password-generator" && <PasswordGenerator />}
     </>
   );
 };

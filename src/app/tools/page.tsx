@@ -7,7 +7,7 @@ export default function Tools() {
     <main className="">
       <Sidebar />
       <div className="p-4 sm:ml-64">
-        <Tool title="URL Encoder" id="url-encoder" />
+        <Tool title="Password Generator" id="password-generator" />
       </div>
     </main>
   );
