@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { customAlphabet } from "nanoid";
+import randomNumber from "random-number-csprng";
 
 interface IOptions {
   lcaz?: Boolean;
@@ -8,9 +9,25 @@ interface IOptions {
   nums?: boolean;
 }
 
+async function shuffleString(string: string): Promise<string> {
+  if (!string.length) return "";
+
+  const stringArray = string.split("");
+
+  for (let i = string.length - 1; i > 0; i--) {
+    var j = Math.floor(await randomNumber(0, string.length - 1));
+    var tmp = stringArray[i];
+    stringArray[i] = stringArray[j];
+    stringArray[j] = tmp;
+  }
+
+  return stringArray.join("");
+}
+
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
+  const generatedCharsArray = [];
 
   const charObj = {
     lcaz: "abcdefghijklmnopqrstuvwxyz",
@@ -32,15 +49,19 @@ export async function GET(request: Request) {
     }
 
     if (
-      (label === "ucaz" || label === "nums" || label === "sc") &&
-      param === "true"
+      label === "ucaz" ||
+      label === "lcaz" ||
+      label === "nums" ||
+      label === "sc"
     ) {
-      options[label] = true;
-      delete options.lcaz;
+      options[label as keyof IOptions] = true;
     }
 
-    if (label === "lcaz" && param === "true") {
-      options.lcaz = true;
+    if (
+      (label === "ucaz" || label === "sc" || label === "nums") &&
+      typeof searchParams.get("lcaz") !== "string"
+    ) {
+      delete options.lcaz;
     }
   });
 
@@ -52,17 +73,30 @@ export async function GET(request: Request) {
     passwordLength / Object.keys(options).length
   );
 
-  let customAlphabetString = "";
+  let remainingChars = passwordLength % Object.keys(options).length;
 
   for (const key in options) {
+    let charsToAdd = 0;
+
+    if (remainingChars > 1) {
+      charsToAdd = await randomNumber(0, remainingChars);
+    } else if (remainingChars > 0) {
+      charsToAdd = remainingChars;
+    }
+
     const nanoid = customAlphabet(
       charObj[key as keyof typeof charObj],
-      totalCharsFromEachOption
+      totalCharsFromEachOption + charsToAdd
     );
-    customAlphabetString += nanoid();
+
+    remainingChars -= charsToAdd;
+
+    generatedCharsArray.push(nanoid());
   }
 
-  const nanoid = customAlphabet(customAlphabetString, passwordLength);
-
-  return NextResponse.json({ password: nanoid() });
+  return NextResponse.json({
+    length: passwordLength,
+    password: await shuffleString(generatedCharsArray.join("")),
+    options,
+  });
 }
