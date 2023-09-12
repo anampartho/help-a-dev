@@ -4,9 +4,6 @@ export function rgbToHex(rgb: string): string {
   // rgb(100%, 100%, 100%) and rgb(100% 100% 100%)
   const seperator = rgb.indexOf(",") > -1 ? "," : " ";
 
-  // Alpha value
-  let alpha;
-
   // Array containing hex values converted from the rgbArray
   const hexArray: string[] = [];
 
