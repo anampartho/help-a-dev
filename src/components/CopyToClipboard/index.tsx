@@ -2,19 +2,10 @@ import React, { useState } from "react";
 import { AiOutlineCopy, AiOutlineCheck } from "react-icons/ai";
 import Button from "@/components/Button";
 import { toast } from "react-toastify";
+import { copyTextToClipboard } from "@/helpers/copyTextToClipboard";
 
 const CopyToClipboard = ({ text }: { text?: string }) => {
   const [isCopied, setIsCopied] = useState(false);
-
-  async function copyTextToClipboard(text: string | undefined) {
-    if (!text) return;
-
-    if ("clipboard" in navigator) {
-      return await navigator.clipboard.writeText(text);
-    } else {
-      return document.execCommand("copy", true, text);
-    }
-  }
 
   const handleCopy = () => {
     copyTextToClipboard(text)
