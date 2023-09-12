@@ -1,12 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Textarea, Checkbox, Label, TextInput } from "flowbite-react";
 import Button from "@/components/Button";
+import { useMutation } from "react-query";
+import { fetchPassword } from "@/helpers/api";
+import { toast } from "react-toastify";
 
 const PasswordGenerator = () => {
   const [selectedOptions, setSelectedOptions] = useState(["lcaz"]);
   const [passwordLength, setPasswordLength] = useState(6);
   const [generatedPassword, setGeneratedPassword] = useState("");
+
+  const { mutate, isLoading } = useMutation(fetchPassword, {
+    onSuccess: ({ data }) => {
+      setGeneratedPassword(data.password);
+    },
+    onError: () => {
+      toast.error("There was an error generating the password!");
+    },
+  });
 
   function handleOptionChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { id, checked } = e.target;
@@ -41,11 +53,7 @@ const PasswordGenerator = () => {
 
     queryParams += `length=${lenght}&${selectedOptions.join("&")}`;
 
-    const data = await fetch(`/api/random?${queryParams}`).then((data) =>
-      data.json()
-    );
-
-    setGeneratedPassword(data.password);
+    mutate(`/api/random?${queryParams}`);
   }
 
   return (
@@ -101,7 +109,13 @@ const PasswordGenerator = () => {
               <Label htmlFor="sc">!@#$%^&*</Label>
             </div>
             <div className="flex items-center gap-4">
-              <Button onClick={handlePasswordGeneration}>Generate</Button>
+              <Button
+                onClick={handlePasswordGeneration}
+                loading={isLoading}
+                disabled={isLoading}
+              >
+                Generate
+              </Button>
             </div>
           </div>
         </div>
