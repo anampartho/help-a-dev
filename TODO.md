@@ -8,9 +8,9 @@
   - [ ] JWT Verifier
   - [ ] JWT Generator
 - [ ] Password
-  - [ ] Password Generator
+  - [x] Password Generator
     - [x] Api endpoint to generat passwords
-    - [ ] Page for generating passwords
+    - [x] Page for generating passwords
   - [ ] Salt Generator
 - [ ] Color converter
   - [ ] Parse color and convert into other color systems
@@ -23,3 +23,4 @@
   - [ ] By keyboard shortcut
 - [ ] Footer with copyright
 - [ ] Responsive design
+- [x] Copy to clipboard button for output strings
