@@ -1,6 +1,7 @@
 import { ReactNode, MouseEventHandler } from "react";
 
-export interface IButton {
+export type Button = {
   children: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
-}
+  loading?: Boolean;
+};
