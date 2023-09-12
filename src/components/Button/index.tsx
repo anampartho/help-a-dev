@@ -7,9 +7,10 @@ const Button = ({
   onClick = () => {},
   loading = false,
   disabled = false,
+  className = "",
 }: ButtonType) => {
   return (
-    <FlowButton onClick={onClick} disabled={disabled}>
+    <FlowButton onClick={onClick} disabled={disabled} className={className}>
       {children}
       {loading && <Spinner className="ml-1" size="sm" />}
     </FlowButton>

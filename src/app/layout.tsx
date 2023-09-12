@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToastContainer
-          position="top-center"
+          position="bottom-right"
           autoClose={5000}
           hideProgressBar={true}
           newestOnTop={false}

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Textarea, Checkbox, Label } from "flowbite-react";
 import { toast } from "react-toastify";
+import CopyToClipboard from "@/components/CopyToClipboard";
 
 const URLEncoder = () => {
   const [action, setAction] = useState("encode");
@@ -82,7 +83,8 @@ const URLEncoder = () => {
             }}
           ></Textarea>
         </div>
-        <div className="flex justify-center rounded h-40 dark:bg-gray-800">
+        <div className="flex justify-center rounded h-40 dark:bg-gray-800 relative">
+          <CopyToClipboard text={convertedString} />
           <Textarea
             id="input-string"
             rows={4}

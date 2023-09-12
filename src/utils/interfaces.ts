@@ -5,4 +5,5 @@ export type Button = {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   loading?: boolean;
   disabled?: boolean;
+  className?: string;
 };

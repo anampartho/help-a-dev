@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { useMutation } from "react-query";
 import { fetchPassword } from "@/helpers/api";
 import { toast } from "react-toastify";
+import CopyToClipboard from "@/components/CopyToClipboard";
 
 const PasswordGenerator = () => {
   const [selectedOptions, setSelectedOptions] = useState(["lcaz"]);
@@ -120,7 +121,8 @@ const PasswordGenerator = () => {
           </div>
         </div>
 
-        <div className="flex col-span-2 justify-center rounded h-40 dark:bg-gray-800">
+        <div className="flex col-span-2 justify-center rounded h-40 dark:bg-gray-800 relative">
+          <CopyToClipboard text={generatedPassword} />
           <Textarea
             id="generated-password"
             rows={4}
