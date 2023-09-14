@@ -60,8 +60,6 @@ export function hexToRgb(hex: string, isPercent = false): string {
     }
   }
 
-  console.log({ alphaValue });
-
   // Conver the hex number to base two numbers and return
   return rgbValue;
 }
