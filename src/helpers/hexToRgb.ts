@@ -1,4 +1,29 @@
 export function hexToRgb(hex: string, isPercent = false): string {
+  /* Example output:
+    {
+      rgb: "rgb(255, 255, 255)",
+      rgba: "rgba(255, 255, 255, 1)",
+      rgbWithSpace: "rgb(255 255 255)",
+      rgbaWithSpace: "rgba(255 255 255 / 1)",
+      rgbPercentage: "rgb(100%, 100%, 100%)",
+      rgbaPercentage: "rgba(100%, 100%, 100%, 100%)",
+      rgbPercentageWithSpace: "rgb(100% 100% 100%)",
+      rgbaPercentageWithSpace: "rgba(100% 100% 100% / 100%)",
+    }
+  */
+
+  // Declare the output object which will be returned
+  let output = {
+    rgb: "",
+    rgba: "",
+    rgbWithSpace: "",
+    rgbaWithSpace: "",
+    rgbPercentage: "",
+    rgbaPercentage: "",
+    rgbPercentageWithSpace: "",
+    rgbaPercentageWithSpace: "",
+  };
+
   // Get rid of # if present.
   let hexString = hex[0] == "#" ? hex.substring(1, hex.length) : hex;
 
