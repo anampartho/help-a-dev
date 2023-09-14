@@ -53,6 +53,11 @@ export function hexToRgb(hex: string, isPercent = false): string {
   if (isAlpha) {
     alphaValue = +(+("0x" + alphaValue) / 255).toFixed(3);
     rgbValue = `rgba(${+r}, ${+g}, ${+b}, ${alphaValue})`;
+
+    if (isPercent) {
+      alphaValue = +(alphaValue * 100).toFixed(1);
+      rgbValue = `rgba(${+r}%, ${+g}%, ${+b}%, ${alphaValue}%)`;
+    }
   }
 
   console.log({ alphaValue });
