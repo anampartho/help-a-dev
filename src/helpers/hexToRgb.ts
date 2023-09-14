@@ -1,9 +1,21 @@
 export function hexToRgb(hex: string, isPercent = false): string {
   // Get rid of # if present.
-  const hexString = hex[0] == "#" ? hex.substring(1, hex.length) : hex;
+  let hexString = hex[0] == "#" ? hex.substring(1, hex.length) : hex;
 
-  // RGB value
-  let rgbValue;
+  // Check if given hex code has alpha value
+  const isAlpha = hexString.length === 4 || hexString.length == 8;
+
+  // Alpha Value & RGB value
+  let alphaValue, rgbValue;
+
+  // Set proper hexString and alphaValue
+  if (hexString.length == 4) {
+    alphaValue = hexString.substring(3, hexString.length);
+    hexString = hexString.substring(0, 3);
+  } else if (hexString.length == 8) {
+    alphaValue = hexString.substring(6, hexString.length);
+    hexString = hexString.substring(0, 6);
+  }
 
   // Set default of r, g and b value to 0, so that if ther hex value is not
   // corrct, we can return a rgb value of black.
@@ -37,6 +49,13 @@ export function hexToRgb(hex: string, isPercent = false): string {
   } else {
     rgbValue = `rgb(${+r}, ${+g}, ${+b})`;
   }
+
+  if (isAlpha) {
+    alphaValue = +(+("0x" + alphaValue) / 255).toFixed(3);
+    rgbValue = `rgba(${+r}, ${+g}, ${+b}, ${alphaValue})`;
+  }
+
+  console.log({ alphaValue });
 
   // Conver the hex number to base two numbers and return
   return rgbValue;
