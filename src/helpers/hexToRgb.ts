@@ -1,27 +1,25 @@
-export function hexToRgb(hex: string, isPercent = false): string {
-  /* Example output:
-    {
-      rgb: "rgb(255, 255, 255)",
-      rgba: "rgba(255, 255, 255, 1)",
-      rgbWithSpace: "rgb(255 255 255)",
-      rgbaWithSpace: "rgba(255 255 255 / 1)",
-      rgbPercentage: "rgb(100%, 100%, 100%)",
-      rgbaPercentage: "rgba(100%, 100%, 100%, 100%)",
-      rgbPercentageWithSpace: "rgb(100% 100% 100%)",
-      rgbaPercentageWithSpace: "rgba(100% 100% 100% / 100%)",
-    }
-  */
-
-  // Declare the output object which will be returned
-  let output = {
-    rgb: "",
-    rgba: "",
-    rgbWithSpace: "",
-    rgbaWithSpace: "",
-    rgbPercentage: "",
-    rgbaPercentage: "",
-    rgbPercentageWithSpace: "",
-    rgbaPercentageWithSpace: "",
+interface Output {
+  rgb: string | null;
+  rgba: string | null;
+  rgbWithSpace: string | null;
+  rgbaWithSpace: string | null;
+  rgbPercentage: string | null;
+  rgbaPercentage: string | null;
+  rgbPercentageWithSpace: string | null;
+  rgbaPercentageWithSpace: string | null;
+}
+export function hexToRgb(hex: string, isPercent = false): Output {
+  // Output variable
+  // this is the default output of this function
+  let output: Output = {
+    rgb: "rgb(255, 255, 255)",
+    rgba: "rgba(255, 255, 255, 1)",
+    rgbWithSpace: "rgb(255 255 255)",
+    rgbaWithSpace: "rgba(255 255 255 / 1)",
+    rgbPercentage: "rgb(100%, 100%, 100%)",
+    rgbaPercentage: "rgba(100%, 100%, 100%, 100%)",
+    rgbPercentageWithSpace: "rgb(100% 100% 100%)",
+    rgbaPercentageWithSpace: "rgba(100% 100% 100% / 100%)",
   };
 
   // Get rid of # if present.
@@ -31,7 +29,8 @@ export function hexToRgb(hex: string, isPercent = false): string {
   const isAlpha = hexString.length === 4 || hexString.length == 8;
 
   // Alpha Value & RGB value
-  let alphaValue, rgbValue;
+  let alphaValue: string | number = isAlpha ? "" : "ff",
+    alphaValuePercent;
 
   // Set proper hexString and alphaValue
   if (hexString.length == 4) {
@@ -46,45 +45,48 @@ export function hexToRgb(hex: string, isPercent = false): string {
   // corrct, we can return a rgb value of black.
   let r = "0",
     g = "0",
-    b = "0";
+    b = "0",
+    rPercent = "0",
+    gPercent = "0",
+    bPercent = "0";
 
   // Add 0x before the hex strings so that we can conver it to actual
   // hex numbers
   if (hexString.length == 3) {
     // color code with 3 values: #fff
-    r = "0x" + hexString[0] + hexString[0];
-    g = "0x" + hexString[1] + hexString[1];
-    b = "0x" + hexString[2] + hexString[2];
+    r = String(+("0x" + hexString[0] + hexString[0]));
+    g = String(+("0x" + hexString[1] + hexString[1]));
+    b = String(+("0x" + hexString[2] + hexString[2]));
   }
 
   if (hexString.length == 6) {
     // color code with 6 values: #ffffff
-    r = "0x" + hexString[0] + hexString[1];
-    g = "0x" + hexString[2] + hexString[3];
-    b = "0x" + hexString[4] + hexString[5];
+    r = String(+("0x" + hexString[0] + hexString[1]));
+    g = String(+("0x" + hexString[2] + hexString[3]));
+    b = String(+("0x" + hexString[4] + hexString[5]));
   }
 
   // Setup r, g, b value if the user wants percentage
-  if (isPercent) {
-    r = String(+((+r / 255) * 100).toFixed(1));
-    g = String(+((+g / 255) * 100).toFixed(1));
-    b = String(+((+b / 255) * 100).toFixed(1));
+  rPercent = String(+((+r / 255) * 100).toFixed(1));
+  gPercent = String(+((+g / 255) * 100).toFixed(1));
+  bPercent = String(+((+b / 255) * 100).toFixed(1));
 
-    rgbValue = `rgb(${+r}%, ${+g}%, ${+b}%)`;
-  } else {
-    rgbValue = `rgb(${+r}, ${+g}, ${+b})`;
-  }
+  alphaValue = +(+("0x" + alphaValue) / 255).toFixed(3);
+  alphaValuePercent = +(alphaValue * 100).toFixed(1);
 
-  if (isAlpha) {
-    alphaValue = +(+("0x" + alphaValue) / 255).toFixed(3);
-    rgbValue = `rgba(${+r}, ${+g}, ${+b}, ${alphaValue})`;
-
-    if (isPercent) {
-      alphaValue = +(alphaValue * 100).toFixed(1);
-      rgbValue = `rgba(${+r}%, ${+g}%, ${+b}%, ${alphaValue}%)`;
-    }
-  }
+  output = {
+    rgb: alphaValue != 1 ? null : `rgb(${r}, ${g}, ${b})`,
+    rgba: `rgba(${r}, ${g}, ${b}, ${alphaValue})`,
+    rgbWithSpace: alphaValue != 1 ? null : `rgb(${r} ${g} ${b})`,
+    rgbaWithSpace: `rgba(${r} ${g} ${b} / ${alphaValue})`,
+    rgbPercentage:
+      alphaValue != 1 ? null : `rgb(${rPercent}%, ${gPercent}%, ${bPercent}%)`,
+    rgbaPercentage: `rgba(${rPercent}%, ${gPercent}%, ${bPercent}%, ${alphaValuePercent}%)`,
+    rgbPercentageWithSpace:
+      alphaValue != 1 ? null : `rgb(${rPercent}% ${gPercent}% ${bPercent}%)`,
+    rgbaPercentageWithSpace: `rgba(${rPercent}% ${gPercent}% ${bPercent}% / ${alphaValuePercent}%)`,
+  };
 
   // Conver the hex number to base two numbers and return
-  return rgbValue;
+  return output;
 }
